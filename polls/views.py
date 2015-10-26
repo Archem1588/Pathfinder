@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 from django.contrib.auth import authenticate, login
 
+
 # Create your views here.
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -19,9 +20,11 @@ class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
 
+
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
+
 
 def vote(request, question_id):
     p = get_object_or_404(Question, pk=question_id)

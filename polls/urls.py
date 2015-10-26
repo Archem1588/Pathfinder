@@ -1,7 +1,8 @@
-__author__ = 'hannahpark'
-
 from django.conf.urls import url
 from . import views
+
+__author__ = 'hannahpark'
+
 
 urlpatterns = [
     # ex: /polls/

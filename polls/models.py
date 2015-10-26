@@ -2,6 +2,7 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
+
 # Create your models here.
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -17,7 +18,7 @@ class Question(models.Model):
 
 class Choice(models.Model):
     # Each Choice is related to a single Question
-    question = models.ForeignKey(Question) # To define associations
+    question = models.ForeignKey(Question)  # To define associations
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
 
