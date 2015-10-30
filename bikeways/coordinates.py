@@ -5,14 +5,30 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 db = os.path.join(BASE_DIR,'db.sqlite3')
 
 
-def getPoint():
+def connectDB():
     conn = sqlite3.connect(db)
     c = conn.cursor()
     c.execute('SELECT * FROM bikeways_coordinatedata')
     rows = c.fetchall()
-    for row in rows:
-        print(row[1]) # latitudes from database
     c.close()
     conn.close()
+    return rows
 
-getPoint()
+def getLats():
+    rows = connectDB()
+    lats = []
+    for row in rows:
+        lats.append(row[1])
+    lat = lats[0]
+    print(lat)
+    return json.dumps(lat)
+
+def getLngs():
+    rows = connectDB()
+    lngs = []
+    for row in rows:
+        lngs.append(row[2])
+    lng = lngs[0]
+    return json.dumps(lngs)
+
+getLats()
