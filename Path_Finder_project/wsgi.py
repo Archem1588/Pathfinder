@@ -1,5 +1,5 @@
 """
-WSGI config for Sample project.
+WSGI config for PathFinder project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

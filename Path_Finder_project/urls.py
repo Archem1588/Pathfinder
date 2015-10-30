@@ -20,8 +20,7 @@ urlpatterns = [
     # Default homepage
     url(r'^$', 'Path_Finder_project.views.home'),
     # url(r'^$', include('accounts.urls', namespace='accounts')),
-    url(r'^polls/', include('polls.urls', namespace='polls')),
-    url(r'^accounts/', include('accounts.urls', namespace='accounts')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^map/', include('map.urls', namespace='map')),
+    # url(r'^accounts/', include('accounts.urls', namespace='accounts')),
+    # url(r'^admin/', include(admin.site.urls)),
+    # url(r'^map/', include('map.urls', namespace='map')),
 ]

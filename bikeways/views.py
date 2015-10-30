@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
 
+
 def route(request):
     return HttpResponse("No route yet!")
 

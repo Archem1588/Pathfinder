@@ -5,7 +5,6 @@ import os
 import django
 
 
-
 class Command(BaseCommand):
     args = '<foo bar ...>'
     help = 'our help string comes here'

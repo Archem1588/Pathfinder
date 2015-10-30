@@ -1,4 +1,3 @@
-__author__ = 'hannahpark'
 # Database --> KML
 
 from xml.dom.minidom import Document
@@ -6,6 +5,7 @@ import sqlite3
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 db = os.path.join(BASE_DIR,'db.sqlite3')
+
 
 def getKml():
     # Create XML document, append KML root element
@@ -32,6 +32,7 @@ def getKml():
     conn.close()
 
     return doc.toprettyxml(indent='  ')
+
 
 def addCoordinate(doc, document, latitude, longitude):
     coordinate = doc.createElement('Coordinate')

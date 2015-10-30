@@ -1,6 +1,6 @@
-__author__ = 'hannahpark'
 from xml.etree.ElementTree import ElementTree
 #from bikeways.models import CoordinateData
+
 
 def startParsing():
     tree = ElementTree()
