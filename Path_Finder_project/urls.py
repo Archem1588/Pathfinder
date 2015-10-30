@@ -19,8 +19,4 @@ from django.contrib import admin
 urlpatterns = [
     # Default homepage
     url(r'^$', 'Path_Finder_project.views.home'),
-    # url(r'^$', include('accounts.urls', namespace='accounts')),
-    # url(r'^accounts/', include('accounts.urls', namespace='accounts')),
-    # url(r'^admin/', include(admin.site.urls)),
-    # url(r'^map/', include('map.urls', namespace='map')),
 ]
