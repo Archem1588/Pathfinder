@@ -19,4 +19,5 @@ from django.contrib import admin
 urlpatterns = [
     # Default homepage
     url(r'^$', 'Path_Finder_project.views.home'),
+    url(r'^/admin', 'Path_Finder_project.views.admin'),
 ]
