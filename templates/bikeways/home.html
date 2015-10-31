@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <html>
   <head>
       <title>Path Finder</title>
       <p style = "font-size:50px">Path Finder</p>
-    <style type="text/css">
+      <style type="text/css">
       html, body { height: 100%; margin: 0; padding: 0; }
       #map {
           width: 700px;
@@ -13,7 +13,7 @@
           bottom:30px;
           left: 40px;
       }
-    </style>
+      </style>
   </head>
   <body>
     <div id="map"></div>
@@ -23,15 +23,42 @@
 
     </div>
     <div id="googleSearch">
-        <input placeholder="Search for Location" autocomplete="off" />
+        <input placeholder="Search for Location" autocomplete="on" />
     </div>
-    <div id="googleSearch">
-        <input placeholder="Address" autocomplete="off" />
+    <div>
+        <input id= "geocomplete" placeholder="Address" tpye="text" autocomplete="off" />
+        <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="http://ubilabs.github.io/geocomplete/jquery.geocomplete.js"></script>
+		<script>
+			  $(function(){
+
+				$("#geocomplete").geocomplete()
+				  .bind("geocode:result", function(event, result){
+					$.log("Result: " + result.formatted_address);
+				  })
+				  .bind("geocode:error", function(event, status){
+					$.log("ERROR: " + status);
+				  })
+				  .bind("geocode:multiple", function(event, results){
+					$.log("Multiple: " + results.length + " results found");
+				  });
+
+				$("#find").click(function(){
+				  $("#geocomplete").trigger("geocode");
+				});
+
+
+				$("#examples a").click(function(){
+				  $("#geocomplete").val($(this).text()).trigger("geocode");
+				  return false;
+				});
+
+			  });
+		</script>
     </div>
 
-
-
-    <script type="text/javascript">
+      <script type="text/javascript">
 
 var map;
 function initMap() {
@@ -51,6 +78,14 @@ function initMap() {
 
 
 }
+
+function initialize() {
+    var input = document.getElementById('address');
+    var autocomplete = new google.maps.places.Autocomplete(inpu);
+
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
 
 
 
@@ -104,6 +139,9 @@ function initMap() {
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSMmC31JL-cWJP1BBwmXbj_9yM-6sSfCQ&callback=initMap">
     </script>
+
+
+
 
   </body>
 </html>
