@@ -18,8 +18,7 @@
   <body>
     <div id="map"></div>
     <div class="geolocation">
-        <input id="Track Current Location" type="checkbox" unchecked />
-        <label for="Track Current Location">Track Current Location</label>
+        <button type="button" onclick="trackCurrentLocation()">Track your current location!</button>
 
     </div>
     <div>
@@ -64,6 +63,7 @@
       <script type="text/javascript">
 
 var map;
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 49.261226, lng: -123.1139271},
@@ -82,10 +82,42 @@ function initMap() {
     //map.setMyLocationEnabled(true);
 }
 
+function trackCurrentLocation(){
+    if(navigator.geolocation) {
+    browserSupportFlag = true;
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var LatLng = {lat: position.coords.latitude,lng:position.coords.longitude};
+      initialLocation = new google.maps.Marker({
+          position:LatLng,
+          map: map,
+          title: "Your Current Location"
+      });
+      initialLocation.setMap(map);
+      map.setCenter(LatLng);
+    }, function() {
+      handleNoGeolocation(browserSupportFlag);
+    });
+  }
+  // Browser doesn't support Geolocation
+  else {
+    browserSupportFlag = false;
+    handleNoGeolocation(browserSupportFlag);
+  }
+
+  function handleNoGeolocation(errorFlag) {
+    if (errorFlag == true) {
+      alert("Geolocation service failed.");
+      initialLocation = vancouver;
+    } else {
+      alert("Your browser doesn't support geolocation. ");
+      initialLocation = vancouver;
+    }
+    map.setCenter(initialLocation);
+  }
+}
 
 function fetchData() {
     jQuery.getJSON('/coord_test', function (data) {
-        //alert('fuck');
         var myLatLng = {lat: data[0].lat, lng: data[0].lng}; //49.2685017
         var marker = new google.maps.Marker({
             position: myLatLng,
