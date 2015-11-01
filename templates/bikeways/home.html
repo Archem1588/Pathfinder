@@ -85,7 +85,8 @@ function initMap() {
 
 function fetchData() {
     jQuery.getJSON('/coord_test', function (data) {
-        var myLatLng = {lat: data[0], lng: -123.204042}; //49.2685017
+        //alert('fuck');
+        var myLatLng = {lat: data[0].lat, lng: data[0].lng}; //49.2685017
         var marker = new google.maps.Marker({
             position: myLatLng,
             map: map,
@@ -116,9 +117,11 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 
     </script>
+
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSMmC31JL-cWJP1BBwmXbj_9yM-6sSfCQ&callback=initMap">
     </script>
+
 
 
 

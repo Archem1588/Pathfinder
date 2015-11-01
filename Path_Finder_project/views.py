@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from bikeways.coordinates import getLats, getLngs
+from bikeways.coordinates import getLats, getLngs, getCoords
 
 
 def home(request):
@@ -19,5 +19,5 @@ def home(request):
 #    return HttpResponse(lat, content_type='application/json')
 
 def coord_test(request):
-    lat = getLngs()
-    return HttpResponse(lat, content_type='application/json')
+    coord = getCoords()
+    return HttpResponse(coord, content_type='application/json')
