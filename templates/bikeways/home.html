@@ -24,44 +24,25 @@
     <div>
         <button type="button" onclick="fetchData()">This is a test button!</button>
     </div>
-    <div id="googleSearch">
-        <input placeholder="Search for Location" autocomplete="on" />
-    </div>
+
+    <!-- Search Engine -->
+    <input id="googleSearch" placeholder="Enter a location" type="text" />
+
     <div>
-        <input id= "geocomplete" placeholder="Address" type="text" autocomplete="off" />
+        <input type="text" name="auto" id="autocomplete=" />
+    </div>
         <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script src="http://ubilabs.github.io/geocomplete/jquery.geocomplete.js"></script>
-		<script>
-			  $(function(){
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="jquery.geocomplete.js"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 
-				$("#geocomplete").geocomplete()
-				  .bind("geocode:result", function(event, result){
-					$.log("Result: " + result.formatted_address);
-				  })
-				  .bind("geocode:error", function(event, status){
-					$.log("ERROR: " + status);
-				  })
-				  .bind("geocode:multiple", function(event, results){
-					$.log("Multiple: " + results.length + " results found");
-				  });
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSMmC31JL-cWJP1BBwmXbj_9yM-6sSfCQ&signed_in=true&libraries=places&callback=initMap"
+        async defer></script>
 
-				$("#find").click(function(){
-				  $("#geocomplete").trigger("geocode");
-				});
-
-
-				$("#examples a").click(function(){
-				  $("#geocomplete").val($(this).text()).trigger("geocode");
-				  return false;
-				});
-
-			  });
-		</script>
-    </div>
 
       <script type="text/javascript">
-
 var map;
 
 function initMap() {
@@ -69,18 +50,78 @@ function initMap() {
         center: {lat: 49.261226, lng: -123.1139271},
         zoom: 12
     });
-
     var kmlUrl = 'http://data.vancouver.ca/download/kml/bikeways.kmz';
     var kmlOptions = {
         suppressInfoWindows: true,
         preserveViewPort: false,
         map: map
     };
-    //fetchData()
-
     //var kmlLayer = new google.maps.KmlLayer(kmlUrl, kmlOptions);
     //map.setMyLocationEnabled(true);
+
+    var input = document.getElementById('googleSearch');
+    //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input)
+
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        var place = autocomplete.getPlace();
+        document.getElementById('city2').value = place.name;
+        document.getElementById('cityLat').value = place.geometry.location.lat();
+        document.getElementById('cityLng').value = place.geometry.location.lng();
+        alert("This function is working!");
+        //alert(place.name);
+        // alert(place.address_components[0].long_name);
+
+    });
+    autocomplete.bindTo('bounds', map);
 }
+google.maps.event.addDomListener(window, 'load', initialize);
+
+
+
+
+    var infowindow = new google.maps.InfoWindow();
+    var marker = new google.maps.Marker({
+        map: map,
+        anchorPoint: new google.maps.Point(0, -29)
+    });
+
+    autocomplete.addEventListener('place_changed', function() {
+        infowindow.close();
+        marker.setVisible(false);
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+            return;
+        }
+
+        if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+        } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);
+        }
+        marker.setIcon({
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0,0),
+            anchor: new google.maps.Point(17,34),
+            scaledSize: new google.maps.Size(35,35)
+        })});
+    marker.setPosition(place.geometry.location);
+    marker.setVisible(true);
+
+    var address = '';
+    if (place.address_components) {
+      address = [
+        (place.address_components[0] && place.address_components[0].short_name || ''),
+        (place.address_components[1] && place.address_components[1].short_name || ''),
+        (place.address_components[2] && place.address_components[2].short_name || '')
+      ].join(' ');
+    }
+
+    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+    infowindow.open(map, marker);
 
 function trackCurrentLocation(){
     if(navigator.geolocation) {
@@ -124,9 +165,33 @@ function fetchData() {
             map: map,
             title: 'Hello World!'
         });
+        var coordinates = [];
+        jQuery.each(data, function(index, value) {
+            var myLatLng = {lat: value.lat, lng: value.lng};
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'hope this works'
+            });
+        /*
+        var coordinates = [
+            {lat: data[0].lat, lng: data[0].lng},
+            {lat: data[1].lat, lng: data[1].lng},
+            {lat: data[2].lat, lng: data[2].lng},
+            {lat: data[3].lat, lng: data[3].lng}
+
+        ];
+        var bikePath = new google.maps.Polyline({
+            path: coordinates,
+            geodesic: true,
+            strokeColor: '#FF0000',
+            strokeOpacity: 1.0,
+            strokeWeight: 2
+        });
+        bikePath.setMap(map);
+        */});
     });
 }
-
 /*
     $.ajax({
                 url: "http://127.0.0.1:8000",
@@ -138,24 +203,23 @@ function fetchData() {
     });
     */
 
-
 function initialize() {
-    var input = document.getElementById('address');
-    var autocomplete = new google.maps.places.Autocomplete(input);
+    var input = document.getElementById('googleSearch');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var place = autocomplete.getPlace();
+            document.getElementById('city2').value = place.name;
+            document.getElementById('cityLat').value = place.geometry.location.lat();
+            document.getElementById('cityLng').value = place.geometry.location.lng();
+            alert("This function is working!");
+            //alert(place.name);
+           // alert(place.address_components[0].long_name);
 
-}
-
+        });
+    }
 google.maps.event.addDomListener(window, 'load', initialize);
 
-
     </script>
-
-    <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSMmC31JL-cWJP1BBwmXbj_9yM-6sSfCQ&callback=initMap">
-    </script>
-
-
-
 
 
   </body>
