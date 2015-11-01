@@ -29,6 +29,5 @@ def getLngs():
     for row in rows:
         lngs.append(row[2])
     lng = lngs[0]
+    print(lng)
     return json.dumps(lngs)
-
-getLats()
