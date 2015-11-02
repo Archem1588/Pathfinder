@@ -3,5 +3,4 @@ from . import views
 
 urlpatterns = [
     url(r'^bikeways/$', views.route, name='route'),
-    # url(r'^admin/', views.admin, name='admin')
     ]

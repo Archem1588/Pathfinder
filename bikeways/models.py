@@ -17,3 +17,5 @@ class CoordinateData(models.Model):
     def __str__(self):
         return self.lat
 
+
+

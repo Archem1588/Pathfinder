@@ -15,11 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import patterns, include, url
 
-from django.contrib import admin
-admin.autodiscover()
+from bikeways.admin import admin_site
 
 urlpatterns = patterns('',
                        url(r'^$', 'Path_Finder_project.views.home'),
-                       url(r'^admin/', include(admin.site.urls)),
+                       url(r'^admin/', include(admin_site.urls)),
                        url(r'^coord_test/', 'Path_Finder_project.views.coord_test'),
                        )
