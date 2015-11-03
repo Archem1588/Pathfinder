@@ -31,6 +31,12 @@
     <div>
         <input type="text" name="auto" id="autocomplete=" />
     </div>
+
+    <!-- Admin login redirect from main page -->
+    <div>
+        <!--<button type="button" onclick="getAdmin()">Admin Login</button>-->
+        <a href="{% url "admin:index" %}">Admin Login</a>
+    </div>
         <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script src="http://ubilabs.github.io/geocomplete/jquery.geocomplete.js"></script>
@@ -155,6 +161,12 @@ function trackCurrentLocation(){
     }
     map.setCenter(initialLocation);
   }
+}
+
+function getAdmin() {
+    jQuery.getScript('/admin', function() {
+        alert('Got admin')
+    })
 }
 
 function fetchData() {
