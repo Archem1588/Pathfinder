@@ -103,14 +103,6 @@
             center: {lat: 49.261226, lng: -123.1139271},
             zoom: 12
         });
-        {#        var kmlUrl = 'http://data.vancouver.ca/download/kml/bikeways.kmz';#}
-        {#        var kmlOptions = {#}
-        {#            suppressInfoWindows: true,#}
-        {#            preserveViewPort: false,#}
-        {#            map: map#}
-        {#        };#}
-        {#        var kmlLayer = new google.maps.KmlLayer(kmlUrl, kmlOptions);#}
-        {#        map.setMyLocationEnabled(true);#}
 
         var input = document.getElementById('pac-input');
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input); // places search bar inside map
@@ -158,58 +150,25 @@
     }
 
     function fetchData() {
-        //jQuery.getJSON('/coord_test', function (data) {
-        $.ajax({
-            url: '/coord_test',
-            dataType: 'json',
-            success: function(data) {
-                var myLatLng = {lat: data[0].lat, lng: data[0].lng}; //49.2685017
+        jQuery.getJSON('/coord_test', function (data) {
+                var myLatLng = {lat: data[0].lat, lng: data[0].lng};
                 var marker = new google.maps.Marker({
-                    position: myLatLng,
+                position: myLatLng,
                     map: map,
                     title: 'Hello World!'
                 });
                 var coordinates = [];
                 jQuery.each(data, function (index, value) {
                     var myLatLng = {lat: value.lat, lng: value.lng};
-                    var marker = new google.maps.Marker({
+                    var marker = new google.maps.Marker
+                    ({
                         position: myLatLng,
                         map: map,
                         title: 'All coordinates from DB'
                     });
-                     /*
-                 var coordinates = [
-                 {lat: data[0].lat, lng: data[0].lng},
-                 {lat: data[1].lat, lng: data[1].lng},
-                 {lat: data[2].lat, lng: data[2].lng},
-                 {lat: data[3].lat, lng: data[3].lng}
-
-                 ];
-                 var bikePath = new google.maps.Polyline({
-                 path: coordinates,
-                 geodesic: true,
-                 strokeColor: '#FF0000',
-                 strokeOpacity: 1.0,
-                 strokeWeight: 2
-                 });
-                 bikePath.setMap(map);
-                 */});
-                },
-            error: function(data) {
-            alert('Sorry, cannot fetch coordinates at the moment')
-            }
-        });
-    }
-            /*
-     $.ajax({
-     url: "http://127.0.0.1:8000",
-     type: "GET",
-     dataType: "json",
-     success: function (json) {
-     $("#map").html(json)
-     }
-     });
-     */
+                });
+            });
+        }
 
 
 </script>

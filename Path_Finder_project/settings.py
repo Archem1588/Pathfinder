@@ -93,7 +93,6 @@ DATABASES = {
         'PORT': '',
     }
 }
-# DATABASES['default'] = dj_database_url.config()
 
 
 # Internationalization
