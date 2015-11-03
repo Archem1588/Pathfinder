@@ -28,13 +28,13 @@
             {% endif %}
 
             {% if model.add_url %}
-                <td><a href="http://data.vancouver.ca/download/kml/bikeways.kmz" class="addlink">{% trans 'Get Raw Data' %}</a></td>
+                <td><a href="http://data.vancouver.ca/download/kml/bikeways.kmz" class="changelink">{% trans 'Get Raw Data' %}</a></td>
             {% else %}
                 <td>&nbsp;</td>
             {% endif %}
 
             {% if model.admin_url %}
-                <td><a href="{{ model.admin_url }}" class="changelink">{% trans 'Change' %}</a></td>
+                <td><a href="{{ model.admin_url }}" class="changelink">{% trans 'Get Parsed Coordinates' %}</a></td>
             {% else %}
                 <td>&nbsp;</td>
             {% endif %}
@@ -80,5 +80,3 @@
     </div>
 </div>
 {% endblock %}
-
-{% if opts.verbose_name == 'Your app verbose name' %}<input type="submit" value="{% trans 'Show PDF' %}" name="_show_pdf" {{ onclick_attrib }}/>{% endif %}
