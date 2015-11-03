@@ -61,8 +61,12 @@
     <button type="button" onclick="trackCurrentLocation()">Track your current location!</button>
 </div>
 <div>
-    <button type="button" onclick="fetchData()">This is a test button!</button>
+    <button type="button" onclick="fetchData()">Display all coordinates</button>
 </div>
+<div>
+        <!--<button type="button" onclick="getAdmin()">Admin Login</button>-->
+        <a href="{% url "admin:index" %}">Admin Login</a>
+    </div>
 
 <input id="pac-input" class="controls" type="text"
        placeholder="Enter a location">
@@ -154,22 +158,26 @@
     }
 
     function fetchData() {
-        jQuery.getJSON('/coord_test', function (data) {
-            var myLatLng = {lat: data[0].lat, lng: data[0].lng}; //49.2685017
-            var marker = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: 'Hello World!'
-            });
-            var coordinates = [];
-            jQuery.each(data, function(index, value) {
-                var myLatLng = {lat: value.lat, lng: value.lng};
+        //jQuery.getJSON('/coord_test', function (data) {
+        $.ajax({
+            url: '/coord_test',
+            dataType: 'json',
+            success: function(data) {
+                var myLatLng = {lat: data[0].lat, lng: data[0].lng}; //49.2685017
                 var marker = new google.maps.Marker({
                     position: myLatLng,
                     map: map,
-                    title: 'hope this works'
+                    title: 'Hello World!'
                 });
-                /*
+                var coordinates = [];
+                jQuery.each(data, function (index, value) {
+                    var myLatLng = {lat: value.lat, lng: value.lng};
+                    var marker = new google.maps.Marker({
+                        position: myLatLng,
+                        map: map,
+                        title: 'All coordinates from DB'
+                    });
+                     /*
                  var coordinates = [
                  {lat: data[0].lat, lng: data[0].lng},
                  {lat: data[1].lat, lng: data[1].lng},
@@ -186,9 +194,13 @@
                  });
                  bikePath.setMap(map);
                  */});
+                },
+            error: function(data) {
+            alert('Sorry, cannot fetch coordinates at the moment')
+            }
         });
     }
-    /*
+            /*
      $.ajax({
      url: "http://127.0.0.1:8000",
      type: "GET",
