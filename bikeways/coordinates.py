@@ -2,8 +2,7 @@ import sqlite3
 import os
 import json
 import psycopg2
-import urllib
-from urllib import parse
+from urllib.parse import urlparse, uses_netloc
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -11,8 +10,8 @@ db = os.path.join(BASE_DIR,'db.sqlite3')
 
 
 def connectDB():
-    urllib.parse.uses_netloc.append("postgres")
-    url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
+    uses_netloc.append("postgres")
+    url = urlparse(os.environ["DATABASE_URL"])
     #conn_string = "host='localhost' dbname='tomato' user='postgres' password='postgres'"
     #conn = psycopg2.connect(conn_string)
     #conn = sqlite3.connect(db)
