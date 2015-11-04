@@ -151,6 +151,7 @@
 
     function fetchData() {
         jQuery.getJSON('/coord_test', function (data) {
+                alert('is this working?');
                 var myLatLng = {lat: data[0].lat, lng: data[0].lng};
                 var marker = new google.maps.Marker({
                 position: myLatLng,
