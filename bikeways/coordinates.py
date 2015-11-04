@@ -47,14 +47,14 @@ def getLats():
     rows = connectDB()
     lats = []
     for row in rows:
-        lats.append(row[2])
+        lats.append(row[1])
     return json.dumps(lats)
 
 def getLngs():
     rows = connectDB()
     lngs = []
     for row in rows:
-        lngs.append(row[1])
+        lngs.append(row[2])
     return json.dumps(lngs)
 
 def getCoords():
