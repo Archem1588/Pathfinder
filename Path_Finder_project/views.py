@@ -9,5 +9,4 @@ def home(request):
 
 def coord_test(request):
     coord = getCoords()
-    #return HttpResponse(coord, content_type='application/json')
-    return HttpResponse("hello")
+    return HttpResponse(coord, content_type='application/json')
