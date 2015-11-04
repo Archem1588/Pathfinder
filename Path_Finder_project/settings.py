@@ -55,6 +55,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'Path_Finder_project.urls'
 
 # Had to change every django.template(s) to django.template (without 's')
+templateDir = os.path.dirname(__file__)
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -74,10 +75,6 @@ TEMPLATES = [
         },
     },
 ]
-templateDir = os.path.dirname(__file__)
-TEMPLATE_DIRS = (
-    os.path.join(templateDir, 'templates')
-)
 
 WSGI_APPLICATION = 'Path_Finder_project.wsgi.application'
 
