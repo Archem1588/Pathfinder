@@ -77,12 +77,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Path_Finder_project.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tomato',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'tomato',
+#     }
+# }
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
