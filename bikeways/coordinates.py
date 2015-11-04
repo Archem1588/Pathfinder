@@ -64,6 +64,6 @@ def getCoords():
         coordinates.append({'lat': row[1], 'lng': row[2]}) #Bug here!
         # sqlite3: lat: row[2], lng: row[1]
         # postgresql: lat: row[1], lng: row[2]
-    return json.dumps(coordinates);
+    return json.dumps(coordinates)
 
 getCoords()
