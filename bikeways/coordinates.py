@@ -21,12 +21,12 @@ def connectDB():
     #conn = sqlite3.connect(db)
 
     # <----Python 3.x Heroku ----->
-    # urllib.parse.uses_netloc.append("postgres")
-    # url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
+    # urllib.parse.uses_netloc.append('postgres')
+    # url = urllib.parse.urlparse('postgres://yccapuatcylbhs:yN4k4RVMIBiQfWwLamKfBiyZ_C@ec2-107-21-221-107.compute-1.amazonaws.com:5432/d8v71h5394a9ht')
 
      # <----Python 2.7 Heroku ---->
-    urlparse.uses_netloc.append("postgres")
-    url = urlparse.urlparse(os.environ["DATABASE_URL"])
+    urlparse.uses_netloc.append('postgres')
+    url = urlparse.urlparse('postgres://yccapuatcylbhs:yN4k4RVMIBiQfWwLamKfBiyZ_C@ec2-107-21-221-107.compute-1.amazonaws.com:5432/d8v71h5394a9ht')
 
     conn = psycopg2.connect(
     database=url.path[1:],
@@ -64,6 +64,6 @@ def getCoords():
         coordinates.append({'lat': row[1], 'lng': row[2]}) #Bug here!
         # sqlite3: lat: row[2], lng: row[1]
         # postgresql: lat: row[1], lng: row[2]
-    return json.dumps(coordinates)
+    print(json.dumps(coordinates))
 
 getCoords()
