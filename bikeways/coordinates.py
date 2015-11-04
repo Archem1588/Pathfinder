@@ -2,9 +2,9 @@ import sqlite3
 import os
 import json
 import psycopg2
-#import urllib.parse
+import urllib.parse
 #from urllib.parse import urlparse, uses_netloc
-import urlparse
+#import urlparse
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,12 +21,12 @@ def connectDB():
     #conn = sqlite3.connect(db)
 
     # <----Python 3.x Heroku ----->
-    # urllib.parse.uses_netloc.append('postgres')
-    # url = urllib.parse.urlparse('postgres://yccapuatcylbhs:yN4k4RVMIBiQfWwLamKfBiyZ_C@ec2-107-21-221-107.compute-1.amazonaws.com:5432/d8v71h5394a9ht')
+    urllib.parse.uses_netloc.append('postgres')
+    url = urllib.parse.urlparse('postgres://yccapuatcylbhs:yN4k4RVMIBiQfWwLamKfBiyZ_C@ec2-107-21-221-107.compute-1.amazonaws.com:5432/d8v71h5394a9ht')
 
      # <----Python 2.7 Heroku ---->
-    urlparse.uses_netloc.append('postgres')
-    url = urlparse.urlparse('postgres://yccapuatcylbhs:yN4k4RVMIBiQfWwLamKfBiyZ_C@ec2-107-21-221-107.compute-1.amazonaws.com:5432/d8v71h5394a9ht')
+    # urlparse.uses_netloc.append('postgres')
+    # url = urlparse.urlparse('postgres://yccapuatcylbhs:yN4k4RVMIBiQfWwLamKfBiyZ_C@ec2-107-21-221-107.compute-1.amazonaws.com:5432/d8v71h5394a9ht')
 
     conn = psycopg2.connect(
     database=url.path[1:],
@@ -64,6 +64,6 @@ def getCoords():
         coordinates.append({'lat': row[1], 'lng': row[2]}) #Bug here!
         # sqlite3: lat: row[2], lng: row[1]
         # postgresql: lat: row[1], lng: row[2]
-    print(json.dumps(coordinates))
+    return json.dumps(coordinates)
 
 getCoords()
