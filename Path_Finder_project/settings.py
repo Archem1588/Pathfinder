@@ -74,6 +74,10 @@ TEMPLATES = [
         },
     },
 ]
+templateDir = os.path.dirname(__file__)
+TEMPLATE_DIRS = (
+    os.path.join(templateDir, 'templates')
+)
 
 WSGI_APPLICATION = 'Path_Finder_project.wsgi.application'
 
@@ -129,4 +133,6 @@ LOGIN_URL = '/accounts/login/'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "bikeways", "static"),)
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'bikeways', 'static'),
+)
