@@ -2,7 +2,7 @@ import sqlite3
 import os
 import json
 import psycopg2
-import urllib
+import urllib.parse
 #from urllib.parse import urlparse, uses_netloc
 
 
