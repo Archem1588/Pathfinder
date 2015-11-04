@@ -80,9 +80,7 @@ WSGI_APPLICATION = 'Path_Finder_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-DATABASES = {
-     'default': dj_database_url.config('postgres://localhost')
- }
+DATABASES['default'] = dj_database_url.config()
 #
 # DATABASES = {
 #     'default': {
