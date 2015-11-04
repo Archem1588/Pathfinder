@@ -3,6 +3,7 @@ import os
 import json
 import psycopg2
 import urllib
+from urllib import parse
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
