@@ -2,8 +2,9 @@ import sqlite3
 import os
 import json
 import psycopg2
-import urllib.parse
+#import urllib.parse
 #from urllib.parse import urlparse, uses_netloc
+import urlparse
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -11,11 +12,22 @@ db = os.path.join(BASE_DIR,'db.sqlite3')
 
 
 def connectDB():
-    urllib.parse.uses_netloc.append("postgres")
-    url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
+
+    # <-----postgresql----->
     #conn_string = "host='localhost' dbname='tomato' user='postgres' password='postgres'"
     #conn = psycopg2.connect(conn_string)
+
+    # <----sqlite3---->
     #conn = sqlite3.connect(db)
+
+    # <----Python 3.x Heroku ----->
+    # urllib.parse.uses_netloc.append("postgres")
+    # url = urllib.parse.urlparse(os.environ["DATABASE_URL"])
+
+     # <----Python 2.7 Heroku ---->
+    urlparse.uses_netloc.append("postgres")
+    url = urlparse.urlparse(os.environ["DATABASE_URL"])
+
     conn = psycopg2.connect(
     database=url.path[1:],
     user=url.username,
@@ -23,6 +35,7 @@ def connectDB():
     host=url.hostname,
     port=url.port
     )
+
     c = conn.cursor()
     c.execute('SELECT * FROM bikeways_coordinatedata')
     rows = c.fetchall()
