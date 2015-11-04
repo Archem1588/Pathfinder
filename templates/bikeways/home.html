@@ -150,7 +150,10 @@
     }
 
     function fetchData() {
-        alert("is this working?");
+        jQuery.getJSON('coord_test', function(data) {
+            alert(data);
+        });
+        /*
         jQuery.getJSON('/coord_test', function (data) {
                 alert('is this working?');
                 var coordinates = [];
@@ -164,6 +167,7 @@
                     });
                 });
             });
+            */
         }
 
 
