@@ -158,8 +158,9 @@
         }
     }
 
-    function fetchData() {
 
+    function fetchData() {
+    {% if user.is_superuser %}
         jQuery.getJSON('/coord_test', function (data) {
                 alert('is this working?');
                 var coordinates = [];
@@ -173,7 +174,9 @@
                     });
                 });
             });
-
+    {% else %}
+        alert('You do not have authorization to perform this action');
+    {% endif %}
         }
 
 
