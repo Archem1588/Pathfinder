@@ -163,7 +163,7 @@
     function fetchData() {
     {% if user.is_superuser %}
         jQuery.getJSON('/coord_test', function (data) {
-                alert('is this working?');
+                alert('Please wait while we fetch data...');
                 var coordinates = [];
                 jQuery.each(data, function (index, value) {
                     var myLatLng = {lat: value.lat, lng: value.lng};
