@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 db = os.path.join(BASE_DIR,'db.sqlite3')
 
 
-def connectDB():
+def connectDB(tableName):
 
     # <-----postgresql----->
     #conn_string = "host='localhost' dbname='tomato' user='postgres' password='postgres'"
@@ -37,7 +37,7 @@ def connectDB():
     )
 
     c = conn.cursor()
-    c.execute('SELECT * FROM bikeways_coordinatedata')
+    c.execute(tableName)
     rows = c.fetchall()
     c.close()
     conn.close()
@@ -58,7 +58,7 @@ def getLngs():
     return json.dumps(lngs)
 
 def getCoords():
-    rows = connectDB()
+    rows = connectDB('SELECT * FROM bikeways_coordinatedata')
     coordinates = []
     for row in rows:
         coordinates.append({'lat': row[1], 'lng': row[2]}) #Bug here!
@@ -67,3 +67,12 @@ def getCoords():
     return json.dumps(coordinates)
 
 getCoords()
+
+def getCoordsWithID():
+    rows = connectDB('SELECT * FROM bikeways_coordinatewithid')
+    coordinates = []
+    for row in rows:
+        coordinates.append({'key': row[1], 'lat': row[2], 'lng': row[3]})
+    return json.dumps(coordinates)
+
+getCoordsWithID()
