@@ -74,9 +74,8 @@
     <button type="button" onclick="fetchData()">Display all coordinates</button>
 </div>
 <div>
-        <!--<button type="button" onclick="getAdmin()">Admin Login</button>-->
-
-    </div>
+    <button type="button" onclick="testing()">Testing</button>
+</div>
 
 <input id="pac-input" class="controls" type="text"
        placeholder="Enter a location">
@@ -179,6 +178,20 @@
         alert('You do not have authorization to perform this action');
     {% endif %}
         }
+
+    function testing() {
+        jQuery.getJSON('/coordwithid_test', function (data) {
+            jQuery.each(data, function (index, value) {
+                var myLatLng = {lat: value.lat, lng: value.lng};
+                var marker = new google.maps.Marker
+                ({
+                    position: myLatLng,
+                    map: map,
+                    title: 'All coordinates from DB'
+                });
+            });
+        });
+    }
 
 
 </script>
