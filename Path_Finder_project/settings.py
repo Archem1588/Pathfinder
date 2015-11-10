@@ -28,6 +28,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Email Setup
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'yourgmail@gmail.com'
+EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# if emails still don't go through, try unlocking captcha:
+# https://accounts.google.com/displayunlockcaptcha
+# https://www.google.com/settings/security/lesssecureapps
 
 # Application definition
 
@@ -124,10 +135,10 @@ USE_TZ = True
 
 # Account Login and Registration Settings
 
-LOGIN_URL = '/accounts/login/'
 ACCOUNT_ACTIVATION_DAYS = 7     # One-week activation window.
 REGISTRATION_AUTO_LOGIN = True  # Automatically log the user in.
-
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
@@ -136,7 +147,15 @@ REGISTRATION_AUTO_LOGIN = True  # Automatically log the user in.
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'bikeways', 'static'),
+    os.path.join(BASE_DIR, "static_in_pro", "our_static"),
+    #os.path.join(BASE_DIR, "static_in_env"),
+    #'/var/www/static/',
 )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env", "media_root")
+
+
+

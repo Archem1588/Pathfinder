@@ -11,3 +11,5 @@ SQLAlchemy==1.0.9
 static3==0.6.1
 urllib3==1.6
 virtualenv==13.1.2
+django-crispy-forms==1.4.0
+django-registration-redux==1.1
