@@ -57,13 +57,13 @@
 </head>
 <body>
 
-{% if user.is_superuser %}
-    <p>Hello, admin.</p>
-    <td><a href="{% url 'admin:logout' %}">Log Out</a></td>
-{% else %}
-    <p>Hello, visitor.</p>
-    <p><a href="{% url "admin:index" %}">Admin Login</a></p>
-{% endif %}
+{#{% if user.is_superuser %}#}
+{#    <p>Hello, admin.</p>#}
+{#    <td><a href="{% url 'admin:logout' %}">Log Out</a></td>#}
+{#{% else %}#}
+{#    <p>Hello, visitor.</p>#}
+{#    <p><a href="{% url "admin:index" %}">Admin Login</a></p>#}
+{#{% endif %}#}
 
 <div id="map"></div>
 <div class="geolocation">

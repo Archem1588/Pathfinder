@@ -34,11 +34,14 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bikeways',
+    'registration',
+    'crispy_forms',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -113,20 +116,24 @@ DATABASES['default']['ENGINE'] = 'django_postgrespool'
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
-# URL of the login page
+
+# Account Login and Registration Settings
+
 LOGIN_URL = '/accounts/login/'
+ACCOUNT_ACTIVATION_DAYS = 7     # One-week activation window.
+REGISTRATION_AUTO_LOGIN = True  # Automatically log the user in.
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
+
+#Crispy FORM TAGs SETTINGS
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
