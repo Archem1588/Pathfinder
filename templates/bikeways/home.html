@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Path Finder</title>
@@ -57,13 +60,15 @@
 </head>
 <body>
 
-{#{% if user.is_superuser %}#}
-{#    <p>Hello, admin.</p>#}
-{#    <td><a href="{% url 'admin:logout' %}">Log Out</a></td>#}
-{#{% else %}#}
-{#    <p>Hello, visitor.</p>#}
-{#    <p><a href="{% url "admin:index" %}">Admin Login</a></p>#}
-{#{% endif %}#}
+{% if user.is_superuser %}
+    {% block welcome-msg %}
+        {% trans 'Welcome,' %}
+        <strong>{% firstof user.get_short_name user.get_username %}</strong>.
+    {% endblock %}
+{% else %}
+    <p>Hello, visitor.</p>
+{% endif %}
+
 
 <div id="map"></div>
 <div class="geolocation">
@@ -236,3 +241,4 @@
 
 </body>
 </html>
+{% endblock %}
