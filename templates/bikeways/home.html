@@ -193,6 +193,40 @@
         });
     }
 
+    /* Outline for Path Parsing Algorithm
+    function getClosestPoint(selectedLatLng, points) {
+        var closestPoint;
+        var distance = 0;
+        var tempDistance;
+        jQuery.each(points, function(index, value) {
+            tempDistance = getDistance(selectedLatLng, value)
+            if (distance == 0) {
+                distance = tempDistance;
+                closestPoint = value;
+            }
+            else if (tempDistance < distance) {
+                        distance = tempDistance;
+                        closestPoint = value;
+                }
+            });
+        filterPaths(closestPoint.tag);
+        return closestPoint
+    };
+
+    function getDistance(selectedLatLng, otherLatLng) {
+        var lat1 = selectedLatLng.lat;
+        var lng1 = selectedLatLng.lng;
+        var lat2 = otherLatLng.lat;
+        var lng2 = otherLatLng.lng;
+        return (math.abs(lat1 + lat2) + math.abs(lng1 + lng2));
+    };
+
+    function filterPaths(tag) {
+        jQuery.each(points, function(index, value)  {
+            if (value.tag == tag)
+                array.splice(index, 1);
+            });
+    } */
 
 </script>
 
