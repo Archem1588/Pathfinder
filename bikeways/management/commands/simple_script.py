@@ -15,8 +15,6 @@ class Command(BaseCommand):
         data = tree.parse('bikeways.kml')
         multiGeom = data.findall('.//{http://www.opengis.net/kml/2.2}MultiGeometry')
 
-        lats = []
-        lngs = []
         for item in multiGeom:
             for lineString in item:
                 for coord in lineString:

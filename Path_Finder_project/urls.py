@@ -13,16 +13,13 @@ Including another URLconf
     1. Add an import:  from blog import urls as blog_urls
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf import settings
 from django.conf.urls import include, url
-from django.conf.urls.static import static
 from django.contrib import admin
-#from bikeways.admin import admin_site
 
 urlpatterns = [
     url(r'^$', 'Path_Finder_project.views.home', name='home'),
     url(r'^coord_test/', 'Path_Finder_project.views.coord_test'),
+    url(r'^coordwithid_test/', 'Path_Finder_project.views.coordwithid_test'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^accounts/', include('registration.backends.default.urls')),
 ]
-
