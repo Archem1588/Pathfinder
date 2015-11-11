@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about/$', 'Path_Finder_project.views.about', name='about'),
     url(r'^accounts/', include('registration.backends.default.urls')),
+    url('', include('social.apps.django_app.urls', namespace='social')),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
