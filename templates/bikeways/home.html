@@ -57,6 +57,13 @@
             font-weight: 300;
         }
     </style>
+    <!-- Google+ Login and Share
+    <link rel="canonical" href="https://path-finder.herokuapp.com" />
+    <script src="https://apis.google.com/js/platform.js" async defer>
+    </script>
+    <meta name="google-signin-client_id" content="involuted-disk-110419.apps.googleusercontent.com">
+    -->
+  </head>
 </head>
 <body>
 
@@ -345,13 +352,36 @@ function logout() {
 </fb:login-button>
 <!--<button type="button" onclick="logout()">Logout from Facebook</button>-->
 <div class="fb-like" data-href="https://path-finder.herokuapp.com" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+<div id="my-signin2"></div>
+  <script>
+    function onSuccess(googleUser) {
+      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    function renderButton() {
+      gapi.signin2.render('my-signin2', {
+        'scope': 'https://www.googleapis.com/auth/plus.login',
+        'width': 200,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
+  </script>
 
+  <!--<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>-->
 
 <div id="status">
 </div>
 
+<!--<g:plus action="share"></g:plus>-->
+
 <!-- Initialize map-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSMmC31JL-cWJP1BBwmXbj_9yM-6sSfCQ&signed_in=true&libraries=places&callback=initMap"
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSMmC31JL-cWJP1BBwmXbj_9yM-6sSfCQ&signed_in=false&libraries=places&callback=initMap"
         async defer></script>
 
 </body>

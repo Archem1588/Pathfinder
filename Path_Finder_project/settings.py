@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import dj_database_url
+import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -99,8 +100,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'tomato',
+        'USER': 'postgres',
     }
 }
+
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -163,9 +166,14 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env", "media_roo
 FACEBOOK_APP_ID = '531963513646710'
 FACEBOOK_API_SECRET = '8f06287f20dc6dd922efb27b977a0d1b'
 
+#GOOGLE_OAUTH2_KEY = 'AIzaSyBSMmC31JL-cWJP1BBwmXbj_9yM-6sSfCQ'
+#GOOGLE_OAUTH2_SECRET = ''
+
 AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookOAuth2',
     'social.backends.facebook.FacebookAppOAuth2',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.google.GooglePlusAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 
