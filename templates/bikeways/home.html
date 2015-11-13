@@ -76,7 +76,7 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
-{% if user.is_superuser %}
+{% if user.is_authenticated %}
     {% block welcome-msg %}
         {% trans 'Welcome,' %}
         <strong>{% firstof user.get_short_name user.get_username %}</strong>.

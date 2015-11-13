@@ -32,8 +32,8 @@ ALLOWED_HOSTS = []
 # Email Setup
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'yourgmail@gmail.com'
-EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_HOST_USER = 'tomato.pathfinder@gmail.com'
+EMAIL_HOST_PASSWORD = 'Pathfinder'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
@@ -145,6 +145,7 @@ ACCOUNT_ACTIVATION_DAYS = 7     # One-week activation window.
 REGISTRATION_AUTO_LOGIN = True  # Automatically log the user in.
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
