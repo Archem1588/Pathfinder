@@ -46,7 +46,8 @@ function initMap() {
             window.alert("Autocomplete's returned place contains no geometry");
             return;
         } else {
-            makeNewMarkerMap(place.geometry.location, place.name);
+            var LatLng = {lat: place.geometry.location.lat(),lng:place.geometry.location.lng()};
+            makeNewMarkerMap(LatLng, place.name);
         }
     });
 }
@@ -95,14 +96,13 @@ function testing() {
 }
 */
 
-function doStuff() {
+function findThreeRoutes() {
     tempAllCoordinates = allCoordinates.slice();
     if (lastInputtedCoordinate == null)
         alert("Please set a location!");
     for (var i = 0; i < 3; i++) {
         getClosestPoint(lastInputtedCoordinate, tempAllCoordinates);
     }
-    alert(displayedCoordinates.length);
     jQuery.each(displayedCoordinates, function (index, value) {
         var myLatLng = {lat: value.lat, lng: value.lng};
         var marker = new google.maps.Marker
@@ -141,8 +141,6 @@ function filterByKey(key) {
             i--;
         }
     }
-    alert(displayedCoordinates.length);
-    alert(tempAllCoordinates.length);
 }
 
 function getDistance(selectedLatLng, otherLatLng) {
