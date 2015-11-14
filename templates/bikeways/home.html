@@ -100,6 +100,9 @@
 <div>
     <button type="button" onclick="testing()">Testing</button>
 </div>
+<div>
+    <button type="button" onclick="doStuff()">Get three nearest routes</button>
+</div>
 
 <input id="pac-input" class="controls" type="text"
        placeholder="Enter a location">
@@ -115,6 +118,24 @@
 
     var map;
     var markers = []; // initialize markers
+    var lastInputtedCoordinate = null;
+    var allCoordinates = [];
+    var tempAllCoordinates = [];
+    var displayedCoordinates = [];
+
+    function doStuff() {
+        tempAllCoordinates = allCoordinates.slice();
+        if (lastInputtedCoordinate == null)
+            alert("Please set a location!");
+        var size = tempAllCoordinates.length; //remove later
+        alert(size); // remove later
+        for (var i = 0; i < 3; i++) {
+            alert(1);
+            getClosestPoint(lastInputtedCoordinate, tempAllCoordinates);
+        }
+        var length = displayedCoordinates.length;
+        alert(length);
+    }
 
     //clear old markers and make a map with a new one
     function makeNewMarkerMap(pos, title){
@@ -129,9 +150,17 @@
         }));
         map.setCenter(pos);
         map.setZoom(17);
+        lastInputtedCoordinate = pos;
     }
 
     function initMap() {
+        jQuery.getJSON('/coordwithid_test', function (data) {
+            jQuery.each(data, function (index, value) {
+                var myCoordinate = {lat: value.lat, lng: value.lng, key: value.key};
+                allCoordinates.push(myCoordinate);
+
+            });
+        });
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 49.261226, lng: -123.1139271},
             zoom: 12
@@ -217,14 +246,17 @@
         });
     }
 
-    /* Outline for Path Parsing Algorithm
     function getClosestPoint(selectedLatLng, points) {
-        var closestPoint;
-        var distance = 0;
-        var tempDistance;
+        alert("getClosestPoint");
+        var closestPoint = null;
+        var distance = null;
+        var tempDistance = null;
+
         jQuery.each(points, function(index, value) {
-            tempDistance = getDistance(selectedLatLng, value)
-            if (distance == 0) {
+           //alert("getclosestpointloop");
+            tempDistance = getDistance(selectedLatLng, value);
+           //alert("got the distance boiz");
+            if (distance == null) {
                 distance = tempDistance;
                 closestPoint = value;
             }
@@ -233,24 +265,40 @@
                         closestPoint = value;
                 }
             });
-        filterPaths(closestPoint.tag);
-        return closestPoint
+        alert(closestPoint.key);
+        alert("that was the key");
+        filterByKey(closestPoint.key);
+        return;
     };
+
+    function filterByKey(key) {
+        alert("filterbykey start");
+        alert(tempAllCoordinates.length);
+        jQuery.each(tempAllCoordinates, function(index, value) {
+            //alert("it went into the loop");
+            //alert(key);
+            //alert(value.key);
+            if (value.key == key) {
+                displayedCoordinates.push(value);
+                tempAllCoordinates.splice(index, 1);
+            };
+            //alert(displayedCoordinates.length);
+            //alert(tempAllCoordinates.length);
+        });
+        alert("filterbykey end");
+        alert(tempAllCoordinates.length);
+        alert(displayedCoordinates.length);
+        return;
+    }
+
 
     function getDistance(selectedLatLng, otherLatLng) {
         var lat1 = selectedLatLng.lat;
         var lng1 = selectedLatLng.lng;
         var lat2 = otherLatLng.lat;
         var lng2 = otherLatLng.lng;
-        return (math.abs(lat1 + lat2) + math.abs(lng1 + lng2));
+        return (Math.abs(lat1 + lat2) + Math.abs(lng1 + lng2));
     };
-
-    function filterPaths(tag) {
-        jQuery.each(points, function(index, value)  {
-            if (value.tag == tag)
-                array.splice(index, 1);
-            });
-    } */
 
 
   // This is called with the results from from FB.getLoginStatus().
