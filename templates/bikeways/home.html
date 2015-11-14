@@ -207,7 +207,7 @@
                         ({
                             position: myLatLng,
                             map: map,
-                            title: value.key,
+                            title: value.lat.toString(),
                         });
                     });
                 });
@@ -244,7 +244,7 @@
                 ({
                     position: myLatLng,
                     map: map,
-                    title: value.key
+                    title: value.key.toString()
                 });
             });
         }
@@ -276,15 +276,18 @@
                     i--;
                 }
             }
+            alert(displayedCoordinates.length);
+            alert(tempAllCoordinates.length);
         }
 
-
         function getDistance(selectedLatLng, otherLatLng) {
-            var lat1 = Math.abs(selectedLatLng.lat);
-            var lng1 = Math.abs(selectedLatLng.lng);
-            var lat2 = Math.abs(otherLatLng.lat);
-            var lng2 = Math.abs(otherLatLng.lng);
-            return ();
+            var lat1 = selectedLatLng.lat;
+            var lng1 = selectedLatLng.lng;
+            var lat2 = otherLatLng.lat;
+            var lng2 = otherLatLng.lng;
+            var sidea = Math.abs(lat1 - lat2);
+            var sideb = Math.abs(lng1 - lng2);
+            return (Math.sqrt(sidea*sidea+sideb*sideb));
         };
 
         // This is called with the results from from FB.getLoginStatus().
