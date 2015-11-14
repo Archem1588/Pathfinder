@@ -1,80 +1,29 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
 {% load i18n %}
+{% load staticfiles %}
 {% block content %}
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Path Finder</title>
     <p style = "font-size:20px">Path Finder</p>
-    <style type="text/css">
-        html, body { height: 100%; margin: 0; padding: 20px; }
-        #map {
-            width: 700px;
-            height: 500px;
-            top: 0px;
-            bottom:0px;
-            left: 40px;
-        }
-        .controls {
-            margin-top: 10px;
-            border: 1px solid transparent;
-            border-radius: 2px 0 0 2px;
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            height: 32px;
-            outline: none;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-        }
+    <!-- CSS for Map -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/map.css' %}" />
+    <!-- JS for Map -->
+    <script src="{% static 'js/load_map.js' %}"></script>
+    <!-- JS for Facebook -->
+    <script src="{% static 'js/facebook.js' %}"></script>
 
-        #pac-input {
-            background-color: #fff;
-            font-family: Roboto;
-            font-size: 15px;
-            font-weight: 300;
-            margin-left: 12px;
-            padding: 0 11px 0 13px;
-            text-overflow: ellipsis;
-            width: 300px;
-        }
-
-        #pac-input:focus {
-            border-color: #4d90fe;
-        }
-
-        .pac-container {
-            font-family: Roboto;
-        }
-
-        #type-selector {
-            color: #fff;
-            background-color: #4d90fe;
-            padding: 5px 11px 0px 11px;
-        }
-
-        #type-selector label {
-            font-family: Roboto;
-            font-size: 13px;
-            font-weight: 300;
-        }
-    </style>
     <!-- Google+ Login and Share
     <link rel="canonical" href="https://path-finder.herokuapp.com" />
     <script src="https://apis.google.com/js/platform.js" async defer>
     </script>
     <meta name="google-signin-client_id" content="involuted-disk-110419.apps.googleusercontent.com">
     -->
-  </head>
 </head>
 <body>
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=531963513646710";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+<!--<div id="fb-root"></div>-->
 
 {% if user.is_authenticated %}
     {% block welcome-msg %}
@@ -104,6 +53,10 @@
 <input id="pac-input" class="controls" type="text"
        placeholder="Enter a location">
 
+<fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();">
+</fb:login-button>
+<div class="fb-like" data-href="https://path-finder.herokuapp.com" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="http://ubilabs.github.io/geocomplete/jquery.geocomplete.js"></script>
@@ -112,76 +65,6 @@
 <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 
 <script type="text/javascript">
-
-    var map;
-    var markers = []; // initialize markers
-
-    //clear old markers and make a map with a new one
-    function makeNewMarkerMap(pos, title){
-        markers.forEach(function(marker) {
-            marker.setMap(null);
-        });
-        markers = [];
-        markers.push(new google.maps.Marker({
-            position: pos,
-            map: map,
-            title: title
-        }));
-        map.setCenter(pos);
-        map.setZoom(17);
-    }
-
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 49.261226, lng: -123.1139271},
-            zoom: 12
-        });
-
-        var input = document.getElementById('pac-input');
-        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input); // places search bar inside map
-
-        var autocomplete = new google.maps.places.Autocomplete(input);
-        autocomplete.bindTo('bounds', map); // prioritizes nearby locations
-
-        autocomplete.addListener('place_changed', function() {
-
-            var place = autocomplete.getPlace();
-            if (!place.geometry) {
-                window.alert("Autocomplete's returned place contains no geometry");
-                return;
-            } else {
-                makeNewMarkerMap(place.geometry.location, place.name);
-            }
-        });
-    }
-
-    function trackCurrentLocation(){
-        if(navigator.geolocation) {
-            browserSupportFlag = true;
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var LatLng = {lat: position.coords.latitude,lng:position.coords.longitude};
-                makeNewMarkerMap(LatLng, "Your Current Location");
-            }, function() {
-                handleNoGeolocation(browserSupportFlag);
-            });
-        }
-        // Browser doesn't support Geolocation
-        else {
-            browserSupportFlag = false;
-            handleNoGeolocation(browserSupportFlag);
-        }
-        function handleNoGeolocation(errorFlag) {
-            if (errorFlag == true) {
-                alert("Geolocation service failed.");
-                initialLocation = vancouver;
-            } else {
-                alert("Your browser doesn't support geolocation. ");
-                initialLocation = vancouver;
-            }
-            map.setCenter(initialLocation);
-        }
-    }
-
 
     function fetchData() {
     {% if user.is_superuser %}
@@ -201,23 +84,11 @@
     {% else %}
         alert('You do not have authorization to perform this action');
     {% endif %}
-        }
-
-    function testing() {
-        jQuery.getJSON('/coordwithid_test', function (data) {
-            jQuery.each(data, function (index, value) {
-                var myLatLng = {lat: value.lat, lng: value.lng};
-                var marker = new google.maps.Marker
-                ({
-                    position: myLatLng,
-                    map: map,
-                    title: 'All coordinates from DB'
-                });
-            });
-        });
     }
+</script>
 
-    /* Outline for Path Parsing Algorithm
+
+    <!-- Outline for Path Parsing Algorithm
     function getClosestPoint(selectedLatLng, points) {
         var closestPoint;
         var distance = 0;
@@ -250,134 +121,12 @@
             if (value.tag == tag)
                 array.splice(index, 1);
             });
-    } */
+    } -->
 
 
-  // This is called with the results from from FB.getLoginStatus().
-
-    function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
-    // The response object is returned with a status field that lets the
-    // app know the current login status of the person.
-    // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
-    if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      testAPI();
-    } else if (response.status === 'not_authorized') {
-      // The person is logged into Facebook, but not your app.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-    } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
-    }
-  }
-
-
-  // This function is called when someone finishes with the Login
-  // Button.  See the onlogin handler attached to it in the sample
-  // code below.
-  function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      //statusChangeCallback(response);
-    });
-  }
-
-  window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '{531963513646710}',
-    cookie     : true,  // enable cookies to allow the server to access
-                        // the session
-    xfbml      : true,  // parse social plugins on this page
-    version    : 'v2.5' // use version 2.2
-  });
-
-  // Now that we've initialized the JavaScript SDK, we call
-  // FB.getLoginStatus().  This function gets the state of the
-  // person visiting this page and can return one of three states to
-  // the callback you provide.  They can be:
-  //
-  // 1. Logged into your app ('connected')
-  // 2. Logged into Facebook, but not your app ('not_authorized')
-  // 3. Not logged into Facebook and can't tell if they are logged into
-  //    your app or not.
-  //
-  // These three cases are handled in the callback function.
-
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
-
-  };
-
-  // Load the SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
-
-    function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-    });
-  }
-
-function logout() {
-    FB.logout(function(response) {
-  // user is now logged out
-    });
-}
-</script>
-
-<!--
-  Below we include the Login Button social plugin. This button uses
-  the JavaScript SDK to present a graphical Login button that triggers
-  the FB.login() function when clicked.
--->
-
-<fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
-<!--<button type="button" onclick="logout()">Logout from Facebook</button>-->
-<div class="fb-like" data-href="https://path-finder.herokuapp.com" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
-<div id="my-signin2"></div>
-  <script>
-    function onSuccess(googleUser) {
-      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-    }
-    function onFailure(error) {
-      console.log(error);
-    }
-    function renderButton() {
-      gapi.signin2.render('my-signin2', {
-        'scope': 'https://www.googleapis.com/auth/plus.login',
-        'width': 200,
-        'height': 50,
-        'longtitle': true,
-        'theme': 'dark',
-        'onsuccess': onSuccess,
-        'onfailure': onFailure
-      });
-    }
-  </script>
-
-  <!--<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>-->
-
-<div id="status">
-</div>
-
+<!--<div id="my-signin2"></div>-->
+<!--<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>-->
+<!--<div id="status"></div>-->
 <!--<g:plus action="share"></g:plus>-->
 
 <!-- Initialize map-->
