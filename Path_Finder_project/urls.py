@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^coordwithid_test/', 'Path_Finder_project.views.coordwithid_test'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about/$', 'Path_Finder_project.views.about', name='about'),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
+                      {'next_page': '/'}),
     url(r'^accounts/', include('registration.backends.default.urls')),
     url('', include('social.apps.django_app.urls', namespace='social')),
 ]
