@@ -31,9 +31,9 @@ ALLOWED_HOSTS = []
 
 # Email Setup
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'tomato.pathfinder@gmail.com'
-EMAIL_HOST_PASSWORD = 'Pathfinder'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'tomato.pathfinder'
+EMAIL_HOST_PASSWORD = 'Pathfinder1'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
