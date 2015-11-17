@@ -5,7 +5,12 @@
 {% block content %}
 <div class='row'>
 <div class='col-sm-6 col-sm-offset-3'>
-<h1>Profile Settings</h1>
+<h1>{{ full_name }}'s Profile</h1>
+    {{ accounts.forms.as_ul }}
+    <p>Username: {{request.user.username}}</p>
+    <p>First Name: {{ request.user.first_name }}</p>
+    <p>Last Name: {{ request.user.last_name }}</p>
+    <p>Email: {{ request.user.email }}</p>
 {#<form method="post" action=".">#}
 {#  {% csrf_token %}#}
 {#  {{ form|crispy }}#}
