@@ -1,10 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load i18n %}
+{% load crispy_forms_tags %}
 
-</body>
-</html>
+{% block content %}
+<div class='row'>
+<div class='col-sm-6 col-sm-offset-3'>
+<h1>Profile Settings</h1>
+{#<form method="post" action=".">#}
+{#  {% csrf_token %}#}
+{#  {{ form|crispy }}#}
+{##}
+{#  <input class='btn btn-block btn-primary' type="submit" value="{% trans 'Submit' %}" />#}
+{#</form>#}
+</div>
+</div>
+
+<hr/>
+<div class='row'>
+<div class='col-sm-6 col-sm-offset-3 text-align-center'>
+<p>Change <a href="{% url 'auth_password_change' %}">Password</a></p>
+</div>
+</div>
+{% endblock %}
+
