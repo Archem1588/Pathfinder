@@ -2,7 +2,12 @@ from django.shortcuts import render_to_response # Render a template back to brow
 from django.http import HttpResponseRedirect # Redirect browser to different URLs
 from django.contrib import auth # Check username and password/ confirmation
 from django.core.context_processors import csrf # Protection from hackers
+from django.template import RequestContext
 
+
+def show_profile(request):
+    return render_to_response('accounts/profile.html', {'full_name': request.user.username},
+                              context_instance=RequestContext(request))
 
 def login(request):
     c = {}
