@@ -7,8 +7,10 @@ class UserRegistrationForm(RegistrationForm):
 
 class EditProfileForm(RegistrationForm):
     username = forms.CharField(label='username')
+    first_name = forms.CharField(label='First Name')
+    last_name = forms.CharField(label='Last Name')
     email = forms.EmailField(label='email')
 
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['username', 'first_name', 'last_name', 'email']
