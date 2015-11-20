@@ -109,7 +109,17 @@ DATABASES = {
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 DATABASES['default'] = dj_database_url.config(default='postgres://yccapuatcylbhs:yN4k4RVMIBiQfWwLamKfBiyZ_C@ec2-107-21-221-107.compute-1.amazonaws.com:5432/d8v71h5394a9ht')
-DATABASES['default']['ENGINE'] = 'django_postgrespool'
+#DATABASES['default']['ENGINE'] = 'django_postgrespool'
+
+# makemigrations requires this for some reason or it errors
+# Just set to the default value
+#OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2_provider.Application'
+
+# tell django where to put the oauth2 migrations
+#MIGRATION_MODULES = {
+   # key: app name, value: a fully qualified package name, not the usual `app_label.something_else`
+#  'oauth2_provider': 'Path_Finder_project.migrations.oauth2_provider',
+#}
 #
 # DATABASES = {
 #     'default': {

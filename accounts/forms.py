@@ -3,6 +3,8 @@ from django import forms
 from django.contrib.auth.models import User
 
 class UserRegistrationForm(RegistrationForm):
+    first_name = forms.CharField(label='First Name')
+    last_name = forms.CharField(label='Last Name')
     is_happy = forms.ChoiceField(label="Are you feeling happy today?", choices=((True, 'Yes!'), (False, 'Not really')))
 
 class EditProfileForm(RegistrationForm):
