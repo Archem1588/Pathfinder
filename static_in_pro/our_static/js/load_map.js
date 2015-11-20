@@ -79,28 +79,11 @@ function trackCurrentLocation(){
     }
 }
 
-
-/*
-function testing() {
-    jQuery.getJSON('/coordwithid_test', function (data) {
-        jQuery.each(data, function (index, value) {
-            var myLatLng = {lat: value.lat, lng: value.lng};
-            var marker = new google.maps.Marker
-            ({
-                position: myLatLng,
-                map: map,
-                title: 'All coordinates from DB'
-            });
-        });
-    });
-}
-*/
-
 function findThreeRoutes() {
     tempAllCoordinates = allCoordinates.slice();
     if (lastInputtedCoordinate == null)
         alert("Please set a location!");
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 1; i++) {
         getClosestPoint(lastInputtedCoordinate, tempAllCoordinates);
     }
     jQuery.each(displayedCoordinates, function (index, value) {
@@ -112,6 +95,7 @@ function findThreeRoutes() {
             title: value.key.toString()
         });
     });
+    map.setZoom(12);
 }
 
 function getClosestPoint(selectedLatLng, points) {
@@ -152,3 +136,132 @@ function getDistance(selectedLatLng, otherLatLng) {
     var sideb = Math.abs(lng1 - lng2);
     return (Math.sqrt(sidea*sidea+sideb*sideb));
 }
+
+
+
+
+var testCoordinates = [];
+
+function test() {
+    //filter so you dont have keys
+    jQuery.each(displayedCoordinates, function (index, value) {
+        var testCoordinate = {lat: value.lat, lng: value.lng};
+        testCoordinates.push(testCoordinate);
+    });
+    //alert(JSON.stringify(testCoordinates));
+
+    var newarr = [];
+    var unique = {};
+
+    jQuery.each(testCoordinates, function(index, item) {
+        if (!unique[item.lat]) {
+            newarr.push(item);
+            unique[item.lat] = item;
+        }
+    });
+
+    alert(JSON.stringify(testCoordinates));
+
+
+    //find closestpoints and draw
+    //for(var i = 0; i < testCoordinates.length; i++){
+    var eCoords = [];
+    var sCoord = lastInputtedCoordinate;
+
+    for (var i = 0; i < 1; i++) {
+        //alert(JSON.stringify(sCoord));
+        var cPoint = getTestClosest(sCoord, testCoordinates);
+        eCoords.push(cPoint);
+        //alert(JSON.stringify(eCoords[i]));
+        //alert(JSON.stringify(testCoordinates.length));
+
+        for(var j = 0; j < testCoordinates.length; j++){
+            if(cPoint.to == testCoordinates[j].toString()){
+
+
+                //alert(JSON.stringify(testCoordinates[j]));
+                testCoordinates.splice(j, 1);
+                j--;
+            }
+        }
+        alert(JSON.stringify(testCoordinates.length));
+
+        sCoord = cPoint;
+        cPoint = null;
+
+
+        //testCoordinates.splice(i, 1);
+        //i--;
+    }
+
+    function unique(array) {
+        var result = [];
+        $.each(array, function(i, e) {
+            if ($.inArray(e, result) == -1) result.push(e);
+        });
+        return result;
+    }
+
+
+    var flightPath = new google.maps.Polyline({
+        path: eCoords,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+
+    flightPath.setMap(map);
+    testCoordinates = [];
+
+
+    function getTestClosest(selectedLatLng, points) {
+        var closestPoint = null;
+        var distance = null;
+        var tempDistance = null;
+
+        jQuery.each(points, function (index, value) {
+            tempDistance = getDistance(selectedLatLng, value);
+            if (distance == null) {
+                distance = tempDistance;
+                closestPoint = value;
+            }
+            else if (tempDistance < distance && distance != 0) {
+                distance = tempDistance;
+                closestPoint = value;
+            }
+        });
+        return closestPoint;
+    }
+
+    //  var flightPlanCoordinates = [
+    //  {lat: 37.772, lng: -122.214},
+    //  {lat: 37.772, lng: -122.214},
+    //  {lat: 37.772, lng: -122.214},
+    //  {lat: 37.772, lng: -122.214}
+    //];
+    //
+    //  for(var j = 0; j < flightPlanCoordinates.length; j++){
+    //          if({lat: 37.772, lng: -122.214}.toString() == flightPlanCoordinates[j].toString()){
+    //
+    //              alert(JSON.stringify(flightPlanCoordinates[j]));
+    //              flightPlanCoordinates.splice(j, 1);
+    //              j--;
+    //          }
+    //      }
+    //  alert(JSON.stringify(flightPlanCoordinates));
+    //
+    //
+    //  //
+    //  //var ss = [];
+    //  //
+    //  // jQuery.each(flightPlanCoordinates, function (index, value) {
+    //  //    var s = {lat: value.lat, lng: value.lng};
+    //  //    ss.push(s);
+    //  //});
+
+
+}
+
+
+
