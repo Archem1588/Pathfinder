@@ -140,27 +140,19 @@ function getDistance(selectedLatLng, otherLatLng) {
 
 
 
-var testCoordinates = [];
+var tc = [];
 
 function test() {
     //filter so you dont have keys
     jQuery.each(displayedCoordinates, function (index, value) {
         var testCoordinate = {lat: value.lat, lng: value.lng};
-        testCoordinates.push(testCoordinate);
-    });
-    //alert(JSON.stringify(testCoordinates));
-
-    var newarr = [];
-    var unique = {};
-
-    jQuery.each(testCoordinates, function(index, item) {
-        if (!unique[item.lat]) {
-            newarr.push(item);
-            unique[item.lat] = item;
-        }
+        tc.push(testCoordinate);
     });
 
-    alert(JSON.stringify(testCoordinates));
+    var testCoordinates = [];
+    for (var x = 0; x < (tc.length/2); x++){
+        testCoordinates.push(tc[x]);
+    }
 
 
     //find closestpoints and draw
@@ -168,15 +160,16 @@ function test() {
     var eCoords = [];
     var sCoord = lastInputtedCoordinate;
 
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; i < 13; i++) {
         //alert(JSON.stringify(sCoord));
         var cPoint = getTestClosest(sCoord, testCoordinates);
+        //alert(JSON.stringify(cPoint));
         eCoords.push(cPoint);
         //alert(JSON.stringify(eCoords[i]));
         //alert(JSON.stringify(testCoordinates.length));
 
         for(var j = 0; j < testCoordinates.length; j++){
-            if(cPoint.to == testCoordinates[j].toString()){
+            if(cPoint == testCoordinates[j]){ //This gets rid of duplicates...for now
 
 
                 //alert(JSON.stringify(testCoordinates[j]));
@@ -194,13 +187,6 @@ function test() {
         //i--;
     }
 
-    function unique(array) {
-        var result = [];
-        $.each(array, function(i, e) {
-            if ($.inArray(e, result) == -1) result.push(e);
-        });
-        return result;
-    }
 
 
     var flightPath = new google.maps.Polyline({
