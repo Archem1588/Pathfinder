@@ -25,8 +25,17 @@ class Command(BaseCommand):
                         key = placemarkid
                         lng = coord.text[0:12]
                         lat = coord.text[18:30]
+                        latString = str(lat)
+                        latFirstDigit = latString[0]
+                        if latFirstDigit != "4":
+                            lat = coord.text[17:29]
+                        latString = str(lat)
+                        latFirstDigit = latString[0]
+                        if latFirstDigit != "4":
+                            lat = coord.text[16:28]
+
                         # print(key)
-                        # print(lat)
+                        print(lat)
                         # print(lng)
                         c = CoordinateWithID(key=key, latitude=float(lat), longitude=float(lng))
                         c.save()
