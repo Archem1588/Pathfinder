@@ -31,9 +31,9 @@ ALLOWED_HOSTS = []
 
 # Email Setup
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'tomato.pathfinder@gmail.com'
-EMAIL_HOST_PASSWORD = 'Pathfinder'
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'tomato.pathfinder'
+EMAIL_HOST_PASSWORD = 'Pathfinder1'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
@@ -85,6 +85,7 @@ TEMPLATES = [
                 'django.template.context_processors.i18n',
                 'django.template.context_processors.media',
                 'django.template.context_processors.static',
+                'django.core.context_processors.request',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
                 'social.apps.django_app.context_processors.backends',
@@ -164,8 +165,8 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env", "media_root")
 
-FACEBOOK_APP_ID = '531963513646710'
-FACEBOOK_API_SECRET = '8f06287f20dc6dd922efb27b977a0d1b'
+SOCIAL_AUTH_FACEBOOK_KEY = '531963513646710'
+SOCIAL_AUTH_FACEBOOK_SECRET = '8f06287f20dc6dd922efb27b977a0d1b'
 
 #GOOGLE_OAUTH2_KEY = 'AIzaSyBSMmC31JL-cWJP1BBwmXbj_9yM-6sSfCQ'
 #GOOGLE_OAUTH2_SECRET = ''

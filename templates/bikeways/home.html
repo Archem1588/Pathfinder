@@ -28,10 +28,16 @@
 {% if user.is_authenticated %}
     {% block welcome-msg %}
         {% trans 'Welcome,' %}
+        {% if user.is_superuser %}
+            <a href="/admin/">
+            <strong>{% firstof user.get_short_name user.get_username %}</strong>
+            </a>
+        {% else %}
         <a href="/accounts/profile/">
         <strong>{% firstof user.get_short_name user.get_username %}</strong>
         </a>
         <p>Click on your username to view your profile.</p>
+        {% endif %}
     {% endblock %}
 {% else %}
     <p>Hello, visitor.</p>
@@ -60,8 +66,8 @@
 <input id="pac-input" class="controls" type="text"
        placeholder="Enter a location">
 
-<fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();">
-</fb:login-button>
+{#<fb:login-button autologoutlink="true" scope="public_profile,email" onlogin="checkLoginState();">#}
+{#</fb:login-button>#}
 <div class="fb-like" data-href="https://path-finder.herokuapp.com" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
 
 <script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>

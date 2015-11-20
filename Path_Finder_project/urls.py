@@ -17,7 +17,8 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-
+from registration.backends.default.views import RegistrationView
+from accounts.forms import UserRegistrationForm
 
 urlpatterns = [
     url(r'^$', 'Path_Finder_project.views.home', name='home'),
@@ -27,7 +28,11 @@ urlpatterns = [
     url(r'^about/$', 'Path_Finder_project.views.about', name='about'),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
                       {'next_page': '/'}),
+    url(r'accounts/register/$',
+        RegistrationView.as_view(form_class=UserRegistrationForm),
+        name='registration_register'),
     url(r'^accounts/', include('registration.backends.default.urls')),
+    url(r'^accounts/profile/', include('accounts.urls')),
     url('', include('social.apps.django_app.urls', namespace='social')),
 ]
 
