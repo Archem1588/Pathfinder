@@ -7,7 +7,10 @@ var markers = []; // initialize markers
 var lastInputtedCoordinate = null;
 var allCoordinates = [];
 var tempAllCoordinates = [];
-var displayedCoordinates = [];
+//var displayedCoordinates = [];
+var route0Coordinates = [];
+var route1Coordinates = [];
+var route2Coordinates = [];
 
 //clear old markers and make a map with a new one
 function makeNewMarkerMap(pos, title){
@@ -29,9 +32,12 @@ function initMap() {
     jQuery.getJSON('/coordwithid_test', function (data) {
         jQuery.each(data, function (index, value) {
             var myCoordinate = {lat: value.lat, lng: value.lng, key: value.key};
+            if (value.lat > 10) { //temp brute force parsing
             allCoordinates.push(myCoordinate);
+        }
         });
     });
+
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 49.261226, lng: -123.1139271},
         zoom: 12
@@ -80,25 +86,27 @@ function trackCurrentLocation(){
 }
 
 function findThreeRoutes() {
+
     tempAllCoordinates = allCoordinates.slice();
     if (lastInputtedCoordinate == null)
         alert("Please set a location!");
-    for (var i = 0; i < 1; i++) {
-        getClosestPoint(lastInputtedCoordinate, tempAllCoordinates);
+    for (var i = 0; i < 3; i++) {
+        if (i == 0)
+        getClosestPoint(lastInputtedCoordinate, tempAllCoordinates, route0Coordinates);
+        if (i == 1)
+        getClosestPoint(lastInputtedCoordinate, tempAllCoordinates, route1Coordinates);
+        if (i == 2)
+        getClosestPoint(lastInputtedCoordinate, tempAllCoordinates, route2Coordinates);
     }
-    jQuery.each(displayedCoordinates, function (index, value) {
-        var myLatLng = {lat: value.lat, lng: value.lng};
-        var marker = new google.maps.Marker
-        ({
-            position: myLatLng,
-            map: map,
-            title: value.key.toString()
-        });
-    });
+
+    test(route0Coordinates, '#FF0000');
+    test(route1Coordinates, '#FF00FF');
+    test(route2Coordinates, '#000000');
+
     map.setZoom(12);
 }
 
-function getClosestPoint(selectedLatLng, points) {
+function getClosestPoint(selectedLatLng, points, array) {
     var closestPoint = null;
     var distance = null;
     var tempDistance = null;
@@ -114,13 +122,13 @@ function getClosestPoint(selectedLatLng, points) {
             closestPoint = value;
         }
     });
-    filterByKey(closestPoint.key);
+    filterByKey(closestPoint.key,array);
 }
 
-function filterByKey(key) {
+function filterByKey(key, array) {
     for(var i = 0; i < tempAllCoordinates.length; i++){
         if (tempAllCoordinates[i].key == key){
-            displayedCoordinates.push(tempAllCoordinates[i]);
+            array.push(tempAllCoordinates[i]);
             tempAllCoordinates.splice(i,1);
             i--;
         }
@@ -140,27 +148,41 @@ function getDistance(selectedLatLng, otherLatLng) {
 
 
 
-var tc = [];
+var testCoordinates = [];
 
-function test() {
+function test(array,color) {
+
     //filter so you dont have keys
-    jQuery.each(displayedCoordinates, function (index, value) {
+    jQuery.each(array, function (index, value) {
         var testCoordinate = {lat: value.lat, lng: value.lng};
-        tc.push(testCoordinate);
+        testCoordinates.push(testCoordinate);
     });
 
-    var testCoordinates = [];
-    for (var x = 0; x < (tc.length/2); x++){
-        testCoordinates.push(tc[x]);
-    }
+    //alert(JSON.stringify(testCoordinates));
 
+//
+//ja = new Array();
+//
+//ja.push({place:"here",name:"stuff"});
+//ja.push({place:"there",name:"morestuff"});
+//ja.push({place:"there",name:"morestuff"});
+
+
+//Remove Duplicates
+//va+r arr = {};
+//
+//for ( var i=0, len=testCoordinates.length; i < len; i++ )
+//    arr[testCoordinates[i]['lat']] = testCoordinates[i];
+//
+//testCoordinates = new Array();
+//for ( var key in arr )
+//    testCoordinates.push(arr[key]);
 
     //find closestpoints and draw
-    //for(var i = 0; i < testCoordinates.length; i++){
     var eCoords = [];
     var sCoord = lastInputtedCoordinate;
 
-    for (var i = 0; i < 13; i++) {
+    for (var i = 0; i = testCoordinates.length; i++) {
         //alert(JSON.stringify(sCoord));
         var cPoint = getTestClosest(sCoord, testCoordinates);
         //alert(JSON.stringify(cPoint));
@@ -170,14 +192,11 @@ function test() {
 
         for(var j = 0; j < testCoordinates.length; j++){
             if(cPoint == testCoordinates[j]){ //This gets rid of duplicates...for now
-
-
-                //alert(JSON.stringify(testCoordinates[j]));
                 testCoordinates.splice(j, 1);
                 j--;
             }
         }
-        alert(JSON.stringify(testCoordinates.length));
+        //alert(JSON.stringify(testCoordinates.length));
 
         sCoord = cPoint;
         cPoint = null;
@@ -192,7 +211,7 @@ function test() {
     var flightPath = new google.maps.Polyline({
         path: eCoords,
         geodesic: true,
-        strokeColor: '#FF0000',
+        strokeColor: color,
         strokeOpacity: 1.0,
         strokeWeight: 2
     });
