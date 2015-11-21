@@ -5,15 +5,15 @@ from django.contrib.auth.models import User
 class UserRegistrationForm(RegistrationForm):
     first_name = forms.CharField(label='First Name')
     last_name = forms.CharField(label='Last Name')
-    is_happy = forms.ChoiceField(label="Are you feeling happy today?", choices=((True, 'Yes!'), (False, 'Not really')))
 
 
-class EditProfileForm(RegistrationForm):
-    username = forms.CharField(label='username')
-    first_name = forms.CharField(label='First Name')
-    last_name = forms.CharField(label='Last Name')
-    email = forms.EmailField(label='email')
+class EditProfileForm(forms.ModelForm):
+
+    first_name = forms.CharField(label='First Name', required=False)
+    last_name = forms.CharField(label='Last Name', required=False)
+    email = forms.EmailField(label='email', required=False)
+
 
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ['first_name', 'last_name', 'email']
