@@ -50,9 +50,9 @@
     <!--<button type="button" onclick="trackCurrentLocation()">Track your current location!</button>-->
 </div>
 <div>
-{#    {% if user.is_superuser %}#}
+    {% if user.is_superuser %}
     <button type="button" onclick="fetchData()">Display all coordinates</button>
-{#    {% endif %}#}
+    {% endif %}
 
 </div>
 <div>
@@ -80,7 +80,7 @@
 <script type="text/javascript">
 
     function fetchData() {
-{#    {% if user.is_superuser %}#}
+    {% if user.is_superuser %}
         jQuery.getJSON('/coord_test', function (data) {
                 alert('Please wait while we fetch data...');
                 var coordinates = [];
@@ -94,9 +94,9 @@
                         });
                 });
             });
-{#    {% else %}#}
+    {% else %}
         alert('You do not have authorization to perform this action');
-{#    {% endif %}#}
+    {% endif %}
     }
 </script>
 
