@@ -2,11 +2,20 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render  # Render a template back to browser
 from django.http import HttpResponseRedirect # Redirect browser to different URLs
 from accounts.forms import EditProfileForm
+from accounts.forms import UserRegistrationForm
+from registration.signals import user_registered
 
+
+
+def user_registered_callback(sender, user, request, **kwargs):
+    form = UserRegistrationForm(request.POST)
+    user.first_name = form.data['first_name']
+    user.last_name = form.data['last_name']
+    user.save()
 
 def show_profile(request):
-    # return render_to_response('accounts/profile.html', {'full_name': request.user.username},
-    #                           context_instance=RequestContext(request))
+
+    user_registered.connect(user_registered_callback)
 
     user = request.user
     form = EditProfileForm(initial={'username': user.username,

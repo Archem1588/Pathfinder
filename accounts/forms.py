@@ -7,6 +7,7 @@ class UserRegistrationForm(RegistrationForm):
     last_name = forms.CharField(label='Last Name')
     is_happy = forms.ChoiceField(label="Are you feeling happy today?", choices=((True, 'Yes!'), (False, 'Not really')))
 
+
 class EditProfileForm(RegistrationForm):
     username = forms.CharField(label='username')
     first_name = forms.CharField(label='First Name')
