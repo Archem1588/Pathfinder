@@ -4,6 +4,7 @@ from xml.etree.ElementTree import ElementTree
 from bikeways.models import CoordinateWithID
 import os
 import django
+import re
 
 
 class Command(BaseCommand):
@@ -21,24 +22,31 @@ class Command(BaseCommand):
             placemarkid = i
             for item in multiGeom:
                 for lineString in item:
-                    for coord in lineString:
+                    for coord in lineString: #for a single line in bikeways.kml
                         key = placemarkid
-                        lng = coord.text[0:12]
-                        lat = coord.text[18:30]
-                        latString = str(lat)
-                        latFirstDigit = latString[0]
-                        if latFirstDigit != "4":
-                            lat = coord.text[17:29]
-                        latString = str(lat)
-                        latFirstDigit = latString[0]
-                        if latFirstDigit != "4":
-                            lat = coord.text[16:28]
+                        splitcoords = coord.text
+                        splitbycomma = re.split(',0 |,',splitcoords) #[49,123,'']
+                        for index in range(len(splitbycomma)-1):
+                            if index % 2 == 0:
+                                lng = splitbycomma[index]
+                                lat = splitbycomma[index+1]
+                                c = CoordinateWithID(key=key, latitude=float(lat), longitude=float(lng))
+                                print(key)
+                                print(lat)
+                                print(lng)
+                                # c.save()
 
-                        # print(key)
-                        print(lat)
-                        # print(lng)
-                        c = CoordinateWithID(key=key, latitude=float(lat), longitude=float(lng))
-                        c.save()
+                        # lng = coord.text[0:12]
+                        # lat = coord.text[18:30]
+                        #
+                        # latString = str(lat)
+                        # latFirstDigit = latString[0]
+                        # if latFirstDigit != "4":
+                        #     lat = coord.text[17:29]
+                        # latString = str(lat)
+                        # latFirstDigit = latString[0]
+                        # if latFirstDigit != "4":
+                        #     lat = coord.text[16:28]
 
             i += 1
 
