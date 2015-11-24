@@ -106,35 +106,6 @@ DATABASES = {
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 DATABASES['default'] = dj_database_url.config(default='postgres://yccapuatcylbhs:yN4k4RVMIBiQfWwLamKfBiyZ_C@ec2-107-21-221-107.compute-1.amazonaws.com:5432/d8v71h5394a9ht')
-#DATABASES['default']['ENGINE'] = 'django_postgrespool'
-
-# makemigrations requires this for some reason or it errors
-# Just set to the default value
-#OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2_provider.Application'
-
-# tell django where to put the oauth2 migrations
-#MIGRATION_MODULES = {
-   # key: app name, value: a fully qualified package name, not the usual `app_label.something_else`
-#  'oauth2_provider': 'Path_Finder_project.migrations.oauth2_provider',
-#}
-#
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'tomato',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
-#         'HOST': '',
-#         'PORT': '',
-#     }
-# }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR,'db.sqlite3'),
-#     }
-# }
 
 
 # Internationalization
@@ -165,8 +136,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static_in_pro", "our_static"),
-    #os.path.join(BASE_DIR, "static_in_env"),
-    #'/var/www/static/',
 )
 
 MEDIA_URL = '/media/'
@@ -174,9 +143,6 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env", "media_roo
 
 SOCIAL_AUTH_FACEBOOK_KEY = '531963513646710'
 SOCIAL_AUTH_FACEBOOK_SECRET = '8f06287f20dc6dd922efb27b977a0d1b'
-
-#GOOGLE_OAUTH2_KEY = 'AIzaSyBSMmC31JL-cWJP1BBwmXbj_9yM-6sSfCQ'
-#GOOGLE_OAUTH2_SECRET = ''
 
 AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookOAuth2',

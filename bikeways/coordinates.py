@@ -1,10 +1,7 @@
-import sqlite3
 import os
 import json
 import psycopg2
 import urllib.parse
-#from urllib.parse import urlparse, uses_netloc
-#import urlparse
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,20 +10,8 @@ db = os.path.join(BASE_DIR,'db.sqlite3')
 
 def connectDB(tableName):
 
-    # <-----postgresql----->
-    #conn_string = "host='localhost' dbname='tomato' user='postgres' password='postgres'"
-    #conn = psycopg2.connect(conn_string)
-
-    # <----sqlite3---->
-    #conn = sqlite3.connect(db)
-
-    # <----Python 3.x Heroku ----->
     urllib.parse.uses_netloc.append('postgres')
     url = urllib.parse.urlparse('postgres://yccapuatcylbhs:yN4k4RVMIBiQfWwLamKfBiyZ_C@ec2-107-21-221-107.compute-1.amazonaws.com:5432/d8v71h5394a9ht')
-
-     # <----Python 2.7 Heroku ---->
-    # urlparse.uses_netloc.append('postgres')
-    # url = urlparse.urlparse('postgres://yccapuatcylbhs:yN4k4RVMIBiQfWwLamKfBiyZ_C@ec2-107-21-221-107.compute-1.amazonaws.com:5432/d8v71h5394a9ht')
 
     conn = psycopg2.connect(
     database=url.path[1:],
@@ -43,30 +28,6 @@ def connectDB(tableName):
     conn.close()
     return rows
 
-def getLats():
-    rows = connectDB()
-    lats = []
-    for row in rows:
-        lats.append(row[1])
-    return json.dumps(lats)
-
-def getLngs():
-    rows = connectDB()
-    lngs = []
-    for row in rows:
-        lngs.append(row[2])
-    return json.dumps(lngs)
-
-def getCoords():
-    rows = connectDB('SELECT * FROM bikeways_coordinatedata')
-    coordinates = []
-    for row in rows:
-        coordinates.append({'lat': row[1], 'lng': row[2]}) #Bug here!
-        # sqlite3: lat: row[2], lng: row[1]
-        # postgresql: lat: row[1], lng: row[2]
-    return json.dumps(coordinates)
-
-getCoords()
 
 def getCoordsWithID():
     rows = connectDB('SELECT * FROM bikeways_coordinatewithid')
@@ -74,5 +35,3 @@ def getCoordsWithID():
     for row in rows:
         coordinates.append({'key': row[1], 'lat': row[2], 'lng': row[3]})
     return json.dumps(coordinates)
-
-getCoordsWithID()

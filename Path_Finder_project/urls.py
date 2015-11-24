@@ -22,7 +22,6 @@ from accounts.forms import UserRegistrationForm
 
 urlpatterns = [
     url(r'^$', 'Path_Finder_project.views.home', name='home'),
-    url(r'^coord_test/', 'Path_Finder_project.views.coord_test'),
     url(r'^coordwithid_test/', 'Path_Finder_project.views.coordwithid_test'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^about/$', 'Path_Finder_project.views.about', name='about'),
