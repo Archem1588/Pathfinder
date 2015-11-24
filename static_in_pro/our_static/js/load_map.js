@@ -122,7 +122,8 @@ function findThreeRoutes() {
     bikeRoutes.push(p3);
 
     makeNewPathMap(bikeRoutes);
-
+    map.setCenter({lat: 49.261226, lng: -123.1139271});
+    map.setZoom(11);
 }
 
 function findRoute(coords){
@@ -213,7 +214,7 @@ function fetchData() {
                     map: map,
                     title: JSON.stringify(myLatLng)
                 });
-            markers.push(marker);        
+            markers.push(marker);
         });
     });
 }
