@@ -201,4 +201,19 @@ function polylineCoords(coords) {
     return finalCoords;
 }
 
-
+function fetchData() {
+    jQuery.getJSON('/coordwithid_test', function (data) {
+        alert('Please wait while we fetch data...');
+        var coordinates = [];
+        jQuery.each(data, function (index, value) {
+            var myLatLng = {lat: value.lat, lng: value.lng};
+            var marker = new google.maps.Marker
+                ({
+                    position: myLatLng,
+                    map: map,
+                    title: JSON.stringify(myLatLng)
+                });
+            markers.push(marker);        
+        });
+    });
+}

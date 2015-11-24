@@ -63,25 +63,6 @@
 <script src="jquery.geocomplete.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
 
-<script type="text/javascript">
-
-    function fetchData() {
-        jQuery.getJSON('/coordwithid_test', function (data) {
-                alert('Please wait while we fetch data...');
-                var coordinates = [];
-                jQuery.each(data, function (index, value) {
-                    var myLatLng = {lat: value.lat, lng: value.lng};
-                        var marker = new google.maps.Marker
-                        ({
-                            position: myLatLng,
-                            map: map,
-                            title: JSON.stringify(myLatLng)
-                        });
-                });
-            });
-    }
-</script>
-
 <!-- Initialize map-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSMmC31JL-cWJP1BBwmXbj_9yM-6sSfCQ&signed_in=false&libraries=places&callback=initMap"
         async defer></script>
