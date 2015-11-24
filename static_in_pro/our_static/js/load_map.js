@@ -96,7 +96,7 @@ function makeNewPathMap(bikeRoutes){
         path.setMap(map);
         polylines.push(path);
     });
-map.setZoom(12);
+    map.setZoom(12);
 }
 
 function findThreeRoutes() {
@@ -153,14 +153,35 @@ function getClosestPoint(selectedLatLng, points) {
     return closestPoint;
 }
 
-function getDistance(selectedLatLng, otherLatLng) {
-    var lat1 = selectedLatLng.lat;
-    var lng1 = selectedLatLng.lng;
-    var lat2 = otherLatLng.lat;
-    var lng2 = otherLatLng.lng;
-    var sidea = Math.abs(lat1 - lat2);
-    var sideb = Math.abs(lng1 - lng2);
-    return (Math.sqrt(sidea*sidea+sideb*sideb));
+function getDistance(p1, p2) {
+    //var lat1 = selectedLatLng.lat;
+    //var lng1 = selectedLatLng.lng;
+    //var lat2 = otherLatLng.lat;
+    //var lng2 = otherLatLng.lng;
+    //var sidea = Math.abs(lat1 - lat2);
+    //var sideb = Math.abs(lng1 - lng2);
+    //return (Math.sqrt(sidea*sidea+sideb*sideb));
+
+    //var p1 = new google.maps.LatLng(selectedLatLng.lat, selectedLatLng.lng);
+    //var p2 = new google.maps.LatLng(otherLatLng.lat, otherLatLng.lng);
+    //d = (google.maps.geometry.spherical.computeDistanceBetween(p1, p2));
+    //return d;
+
+    var rad = function(x) {
+        return x * Math.PI / 180;
+    };
+
+    var r = 6378137;
+    var dLat = rad(p2.lat - p1.lat);
+    var dLong = rad(p2.lng - p1.lng);
+    var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) *
+        Math.sin(dLong / 2) * Math.sin(dLong / 2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    var d = r * c;
+    return d;
+
+
 }
 
 function filterByKey(key, coords) {
@@ -199,6 +220,15 @@ function polylineCoords(coords) {
         startPoint = closestPoint;
         closestPoint = null;
     }
+
+    for (var i = 0; i < finalCoords.length-1; i++) {
+        var j = i+1;
+        var d = getDistance(finalCoords[i],finalCoords[j]);
+        if (d>650){
+            finalCoords.splice(j, 1);
+            i--;
+        }
+    }
     return finalCoords;
 }
 
@@ -209,11 +239,11 @@ function fetchData() {
         jQuery.each(data, function (index, value) {
             var myLatLng = {lat: value.lat, lng: value.lng};
             var marker = new google.maps.Marker
-                ({
-                    position: myLatLng,
-                    map: map,
-                    title: JSON.stringify(myLatLng)
-                });
+            ({
+                position: myLatLng,
+                map: map,
+                title: JSON.stringify(myLatLng)
+            });
             markers.push(marker);
         });
     });
