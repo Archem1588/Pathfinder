@@ -27,9 +27,9 @@
             </a>
         {% else %}
         <a href="/accounts/profile/">
-        <strong>{% firstof user.get_short_name user.get_username %}</strong>
+        <strong>{% firstof user.get_short_name %}</strong>
         </a>
-        <p>Click on your username to view your profile.</p>
+        <p>Click on your name to view your profile.</p>
         {% endif %}
     {% endblock %}
 {% else %}
