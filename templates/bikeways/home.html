@@ -39,7 +39,8 @@
 
 <div id="map"></div>
 <div class="geolocation">
-    <input type="checkbox" onclick="trackCurrentLocation()">Track your current location!</input>
+    <input id="currentloc" type="checkbox" onclick="trackCurrentLocation()">Track your current location!</input>
+
 </div>
 <div>
     {% if user.is_superuser %}

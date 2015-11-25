@@ -39,29 +39,30 @@ function initMap() {
 }
 
 function trackCurrentLocation(){
-    if(navigator.geolocation) {
-        browserSupportFlag = true;
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var LatLng = {lat: position.coords.latitude,lng:position.coords.longitude};
-            makeNewMarkerMap(LatLng, "Your Current Location");
-        }, function() {
-            handleNoGeolocation(browserSupportFlag);
-        });
-    }
-    // Browser doesn't support Geolocation
-    else {
-        browserSupportFlag = false;
-        handleNoGeolocation(browserSupportFlag);
-    }
-    function handleNoGeolocation(errorFlag) {
-        if (errorFlag == true) {
-            alert("Geolocation service failed.");
-            initialLocation = vancouver;
-        } else {
-            alert("Your browser doesn't support geolocation. ");
-            initialLocation = vancouver;
+    if (document.getElementById('currentloc').checked==true){
+        if(navigator.geolocation) {
+            browserSupportFlag = true;
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var LatLng = {lat: position.coords.latitude,lng:position.coords.longitude};
+                makeNewMarkerMap(LatLng, "Your Current Location");
+            }, function() {
+                handleNoGeolocation(browserSupportFlag);
+            });
         }
-        map.setCenter(initialLocation);
+        else {
+            browserSupportFlag = false;
+            handleNoGeolocation(browserSupportFlag);
+        }
+        function handleNoGeolocation(errorFlag) {
+            if (errorFlag == true) {
+                alert("Geolocation service failed.");
+                initialLocation = vancouver;
+            } else {
+                alert("Your browser doesn't support geolocation. ");
+                initialLocation = vancouver;
+            }
+            map.setCenter(initialLocation);
+        }
     }
 }
 
