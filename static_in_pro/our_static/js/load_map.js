@@ -97,7 +97,7 @@ function makeNewPathMap(bikeRoutes){
         path.setMap(map);
         polylines.push(path);
     });
-    map.setZoom(12);
+    map.setZoom(14);
 }
 
 function findThreeRoutes() {
