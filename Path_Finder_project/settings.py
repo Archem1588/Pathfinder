@@ -63,6 +63,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'Path_Finder_project.urls'
@@ -107,9 +108,11 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 DATABASES['default'] = dj_database_url.config(default='postgres://yccapuatcylbhs:yN4k4RVMIBiQfWwLamKfBiyZ_C@ec2-107-21-221-107.compute-1.amazonaws.com:5432/d8v71h5394a9ht')
 
-import sys
-if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
+
+#Covers regular testing and django-coverage
+if 'test' in sys.argv or 'test_coverage' in sys.argv:
     DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -149,8 +152,8 @@ SOCIAL_AUTH_FACEBOOK_SECRET = '8f06287f20dc6dd922efb27b977a0d1b'
 AUTHENTICATION_BACKENDS = (
     'social.backends.facebook.FacebookOAuth2',
     'social.backends.facebook.FacebookAppOAuth2',
-    'social.backends.google.GoogleOAuth2',
-    'social.backends.google.GooglePlusAuth',
     'django.contrib.auth.backends.ModelBackend',
 )
 SOCIAL_AUTH_LOGIN_REDIRECT_URL ='/'
+SOCIAL_AUTH_BACKEND_ERROR_URL = '/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/'
